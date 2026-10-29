@@ -1,12 +1,12 @@
-# Publishes to PyPI on every version tag (e.g. 0.1.0), with PyPI Trusted
+# Publishes to PyPI when a GitHub release is published (tag e.g. 0.1.0), with PyPI Trusted
 # Publishing: no API token is stored anywhere. One-time setup on pypi.org →
 # Your account → Publishing → Add a pending publisher: owner `coworkingview`,
 # repository `langchain-coworkingview`, workflow `publish.yml`, environment `pypi`.
 name: Publish
 
 on:
-  push:
-    tags: ['*.*.*']
+  release:
+    types: [published]
 
 jobs:
   test:
