@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-coworkingview"
+version = "0.1.0"
+description = "LangChain tools for the CoworkingView catalogue: search coworking spaces and private offices, read a space's prices and a city's market rates. No API key."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "CoworkingView", email = "coworkingview@gmail.com" }]
+keywords = ["langchain", "tools", "agents", "coworking", "office", "real-estate", "prices"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["langchain-core>=1.0,<2"]
+
+[project.urls]
+Homepage = "https://coworkingview.com"
+Documentation = "https://coworkingview.com/en/mcp"
+Source = "https://github.com/coworkingview/langchain-coworkingview"
+Issues = "https://github.com/coworkingview/langchain-coworkingview/issues"
+
+[dependency-groups]
+test = ["pytest>=8", "langchain-tests>=1.1,<2", "pytest-socket>=0.7"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["langchain_coworkingview"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = ["live: hits the real CoworkingView API; opt in with COWORKINGVIEW_LIVE_TESTS=1"]

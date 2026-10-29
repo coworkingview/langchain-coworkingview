@@ -1,0 +1,31 @@
+# Publishes to PyPI on every version tag (e.g. 0.1.0), with PyPI Trusted
+# Publishing: no API token is stored anywhere. One-time setup on pypi.org →
+# Your account → Publishing → Add a pending publisher: owner `coworkingview`,
+# repository `langchain-coworkingview`, workflow `publish.yml`, environment `pypi`.
+name: Publish
+
+on:
+  push:
+    tags: ['*.*.*']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --group test
+      - run: uv run pytest tests/unit_tests
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv build
+      - uses: pypa/gh-action-pypi-publish@release/v1
